@@ -1,8 +1,10 @@
 class MoviesController < ApplicationController
     def index
-       @movie = Movie.all
-       render json: @movie
-    end
+       @movies = Movie.all
+       @movies = Movie.search(params[:search]) if params[:search].present?
+       render json: @movies
+
+    end 
 
 
     def create
@@ -35,7 +37,7 @@ class MoviesController < ApplicationController
     def movies_params
         params.require(:movie).permit(:movie_title, :movie_year, :rank, :description,
         :release_date, :country_of_origin, :language, :budget)
-        #actors_attributes: [:first_name, :last_name, :age]
+        #genres_attributes: [:name, :description]
     end
 
  
